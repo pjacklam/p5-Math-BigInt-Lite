@@ -8,26 +8,25 @@ require 5.006002;
 use strict;
 
 require Exporter;
-use Math::BigInt;
-use vars qw($VERSION @ISA $PACKAGE @EXPORT_OK $upgrade $downgrade
-            $accuracy $precision $round_mode $div_scale $_trap_inf
-            $_trap_nan);
+use Math::BigInt '1.999801';
 
-@ISA = qw(Math::BigInt);
-@EXPORT_OK = qw/objectify/;
+our ($_trap_inf, $_trap_nan);
+
+our @ISA = qw(Math::BigInt);
+our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-$VERSION = '0.15';
+our $VERSION = '0.16';
 
 ##############################################################################
 # global constants, flags and accessory
 
-$accuracy   = undef;
-$precision  = undef;
-$round_mode = 'even';
-$div_scale  = 40;
-$upgrade    = 'Math::BigInt';
-$downgrade  = undef;
+our $accuracy   = undef;
+our $precision  = undef;
+our $round_mode = 'even';
+our $div_scale  = 40;
+our $upgrade    = 'Math::BigInt';
+our $downgrade  = undef;
 
 my $nan = 'NaN';
 
@@ -35,58 +34,65 @@ my $MAX_NEW_LEN;
 my $MAX_MUL;
 my $MAX_ADD;
 
-BEGIN
-  {
-  # from Daniel Pfeiffer: determine largest group of digits that is precisely
-  # multipliable with itself plus carry
-  # Test now changed to expect the proper pattern, not a result off by 1 or 2
-  my ($e, $num) = 3;    # lowest value we will use is 3+1-1 = 3
-  do
+my $MAX_BIN_LEN = 31;
+my $MAX_OCT_LEN = 10;
+my $MAX_HEX_LEN =  7;
+
+BEGIN {
+    my $e0 = 1;
+    my $e1 = $e0 + 1;
+    my $num;
     {
-    $num = ('9' x ++$e) + 0;
-    $num *= $num + 1.0;
-    } while ("$num" =~ /9{$e}0{$e}/);	# must be a certain pattern
-  $e--;					# last test failed, so retract one step
-  # the limits below brush the problems with the test above under the rug:
-  # the test should be able to find the proper $e automatically
-  $e = 5 if $^O =~ /^uts/;	# UTS get's some special treatment
-  $e = 5 if $^O =~ /^unicos/;	# unicos is also problematic (6 seems to work
-				# there, but we play safe)
-  $e = 8 if $e > 8;		# cap, for VMS, OS/390 and other 64 bit systems
+        $num = '9' x $e1;       # maximum value in base 10**$e1
+        $num = $num * $num      # multiply by itself
+               + ($num - 1);    # largest possible carry
+        last if $num !~ /^9{$e0}89{$e1}$/;      # check digit pattern
+        $e0 = $e1;
+        $e1++;
+        redo;
+    }
+    my $e = $e0;                # $e1 is one too large
 
-  my $bi = $e;
+    # the limits below brush the problems with the test above under the rug:
 
-#  # determine how many digits fit into an integer and can be safely added
-#  # together plus carry w/o causing an overflow
-#
-#  # this below detects 15 on a 64 bit system, because after that it becomes
-#  # 1e16  and not 1000000 :/ I can make it detect 18, but then I get a lot of
-#  # test failures. Ugh! (Tomake detect 18: uncomment lines marked with *)
-#  use integer;
-#  my $bi = 5;                   # approx. 16 bit
-#  $num = int('9' x $bi);
-#  # $num = 99999; # *
-#  # while ( ($num+$num+1) eq '1' . '9' x $bi)   # *
-#  while ( int($num+$num+1) eq '1' . '9' x $bi)
-#    {
-#    $bi++; $num = int('9' x $bi);
-#    # $bi++; $num *= 10; $num += 9;     # *
-#    }
-#  $bi--;                                # back off one step
+    # the test should be able to find the proper $e automatically
+    $e = 5 if $^O =~ /^uts/;    # UTS get's some special treatment
+    $e = 5 if $^O =~ /^unicos/; # unicos is also problematic (6 seems to work
+                                # there, but we play safe)
+    $e = 8 if $e > 8;           # cap, for VMS, OS/390 and other 64 bit systems
 
-  # we ensure that every number created is below the length for the add, so
-  # that it is always safe to add two objects together
-  $MAX_NEW_LEN = $bi;
-  # The constant below is used to check the result of any add, if above, we
-  # need to upgrade.
-  $MAX_ADD = int("1E$bi");
-  # For mul, we need to check *before* the operation that both operands are
-  # below the number benlow, since otherwise it could overflow.
-  $MAX_MUL = int("1E$e");
+    my $bi = $e;
 
- # print "MAX_NEW_LEN $MAX_NEW_LEN MAX_ADD $MAX_ADD MAX_MUL $MAX_MUL\n\n";
+    #  # determine how many digits fit into an integer and can be safely added
+    #  # together plus carry w/o causing an overflow
+    #
+    #  # this below detects 15 on a 64 bit system, because after that it becomes
+    #  # 1e16  and not 1000000 :/ I can make it detect 18, but then I get a lot of
+    #  # test failures. Ugh! (Tomake detect 18: uncomment lines marked with *)
+    #  use integer;
+    #  my $bi = 5;                   # approx. 16 bit
+    #  $num = int('9' x $bi);
+    #  # $num = 99999; # *
+    #  # while ( ($num+$num+1) eq '1' . '9' x $bi)   # *
+    #  while ( int($num+$num+1) eq '1' . '9' x $bi)
+    #    {
+    #    $bi++; $num = int('9' x $bi);
+    #    # $bi++; $num *= 10; $num += 9;     # *
+    #    }
+    #  $bi--;                                # back off one step
 
-  }
+    # we ensure that every number created is below the length for the add, so
+    # that it is always safe to add two objects together
+    $MAX_NEW_LEN = $bi;
+    # The constant below is used to check the result of any add, if above, we
+    # need to upgrade.
+    $MAX_ADD = int("1E$bi");
+    # For mul, we need to check *before* the operation that both operands are
+    # below the number benlow, since otherwise it could overflow.
+    $MAX_MUL = int("1E$e");
+
+    # print "MAX_NEW_LEN $MAX_NEW_LEN MAX_ADD $MAX_ADD MAX_MUL $MAX_MUL\n\n";
+}
 
 ##############################################################################
 # we tie our accuracy/precision/round_mode to BigInt, so that setting it here
@@ -479,7 +485,6 @@ sub bzero {
     my $x = shift;
 
     return $x->new(0) unless ref $x; # Class->bone();
-    #  return $x->bzero(@_) unless $x->isa($class); # should not happen
     $$x = 0;
     $x;
 }
@@ -537,31 +542,169 @@ sub as_number {
 }
 
 sub numify {
-    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0]) : ($class, $class->new(@_));
+    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0])
+                                : ($class, $class->new(@_));
 
     return $$x if $x->isa($class);
     $x->numify();
 }
 
 sub as_hex {
-    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0]) : ($class, $class->new(@_));
+    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0])
+                                : ($class, $class->new(@_));
 
     return $upgrade->new($$x)->as_hex() if $x->isa($class);
     $x->as_hex();
 }
 
 sub as_oct {
-    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0]) : ($class, $class->new(@_));
+    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0])
+                                : ($class, $class->new(@_));
 
     return $upgrade->new($$x)->as_oct() if $x->isa($class);
     $x->as_hex();
 }
 
 sub as_bin {
-    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0]) : ($class, $class->new(@_));
+    my ($self, $x) = ref($_[0]) ? (ref($_[0]), $_[0])
+                                : ($class, $class->new(@_));
 
     return $upgrade->new($$x)->as_bin() if $x->isa($class);
     $x->as_bin();
+}
+
+sub from_hex {
+    my $self    = shift;
+    my $selfref = ref $self;
+    my $class   = $selfref || $self;
+
+    my $str = shift;
+
+    # If called as a class method, initialize a new object.
+
+    $self = $class -> bzero() unless $selfref;
+
+    if ($str =~ s/
+                     ^
+                     ( [+-]? )
+                     (0?x)?
+                     (
+                         [0-9a-fA-F]*
+                         ( _ [0-9a-fA-F]+ )*
+                     )
+                     $
+                 //x)
+    {
+        # Get a "clean" version of the string, i.e., non-emtpy and with no
+        # underscores or invalid characters.
+
+        my $sign = $1;
+        my $chrs = $3;
+        $chrs =~ tr/_//d;
+        $chrs = '0' unless CORE::length $chrs;
+
+        return $upgrade -> from_hex($sign . $chrs)
+          if length($chrs) > $MAX_HEX_LEN;
+
+        $$self = oct('0x' . $chrs);
+        $$self = -$$self if $sign eq '-';
+
+        return $self;
+    }
+
+    # For consistency with from_hex() and from_oct(), we return NaN when the
+    # input is invalid.
+
+    return $self->bnan();
+}
+
+sub from_oct {
+    my $self    = shift;
+    my $selfref = ref $self;
+    my $class   = $selfref || $self;
+
+    my $str = shift;
+
+    # If called as a class method, initialize a new object.
+
+    $self = $class -> bzero() unless $selfref;
+
+    if ($str =~ s/
+                     ^
+                     ( [+-]? )
+                     (
+                         [0-7]*
+                         ( _ [0-7]+ )*
+                     )
+                     $
+                 //x)
+    {
+        # Get a "clean" version of the string, i.e., non-emtpy and with no
+        # underscores or invalid characters.
+
+        my $sign = $1;
+        my $chrs = $2;
+        $chrs =~ tr/_//d;
+        $chrs = '0' unless CORE::length $chrs;
+
+        return $upgrade -> from_oct($sign . $chrs)
+          if length($chrs) > $MAX_OCT_LEN;
+
+        $$self = oct($chrs);
+        $$self = -$$self if $sign eq '-';
+
+        return $self;
+    }
+
+    # For consistency with from_hex() and from_oct(), we return NaN when the
+    # input is invalid.
+
+    return $self->bnan();
+}
+
+sub from_bin {
+    my $self    = shift;
+    my $selfref = ref $self;
+    my $class   = $selfref || $self;
+
+    my $str = shift;
+
+    # If called as a class method, initialize a new object.
+
+    $self = $class -> bzero() unless $selfref;
+
+    if ($str =~ s/
+                     ^
+                     ( [+-]? )
+                     (0?b)?
+                     (
+                         [01]*
+                         ( _ [01]+ )*
+                     )
+                     $
+                 //x)
+    {
+        # Get a "clean" version of the string, i.e., non-emtpy and with no
+        # underscores or invalid characters.
+
+        my $sign = $1;
+        my $chrs = $3;
+        $chrs =~ tr/_//d;
+        $chrs = '0' unless CORE::length $chrs;
+
+        return $upgrade -> from_bin($sign . $chrs)
+          if length($chrs) > $MAX_BIN_LEN;
+
+        $$self = oct('0b' . $chrs);
+        $$self = -$$self if $sign eq '-';
+
+        return $self;
+    }
+
+    # For consistency with from_hex() and from_oct(), we return NaN when the
+    # input is invalid.
+
+    return $self->bnan();
 }
 
 ##############################################################################
@@ -1191,7 +1334,43 @@ All other methods from BigInt and BigFloat should work as expected.
 
 =head1 BUGS
 
-None know yet. Please see also L<Math::BigInt>.
+Please report any bugs or feature requests to
+C<bug-math-bigint at rt.cpan.org>, or through the web interface at
+L<https://rt.cpan.org/Ticket/Create.html?Queue=Math-BigInt-Lite> (requires login).
+We will be notified, and then you'll automatically be notified of
+progress on your bug as I make changes.
+
+=head1 SUPPORT
+
+You can find documentation for this module with the perldoc command.
+
+    perldoc Math::BigInt::Lite
+
+You can also look for information at:
+
+=over 4
+
+=item * RT: CPAN's request tracker
+
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Math-BigInt-Lite>
+
+=item * AnnoCPAN: Annotated CPAN documentation
+
+L<http://annocpan.org/dist/Math-BigInt-Lite>
+
+=item * CPAN Ratings
+
+L<http://cpanratings.perl.org/dist/Math-BigInt-Lite>
+
+=item * Search CPAN
+
+L<http://search.cpan.org/dist/Math-BigInt-Lite/>
+
+=item * CPAN Testers Matrix
+
+L<http://matrix.cpantesters.org/?dist=Math-BigInt-Lite>
+
+=back
 
 =head1 LICENSE
 
@@ -1207,6 +1386,20 @@ The L<bignum|bignum> module.
 
 =head1 AUTHORS
 
-(C) by Tels L<http://bloodgate.com/> 2002-2007.
+=over 4
+
+=item *
+
+Copyright 2002-2007 Tels, L<http://bloodgate.com>.
+
+=item *
+
+Copyright 2010 Florian Ragwitz L<flora@cpan.org>.
+
+=item *
+
+Copyright 2016- Peter John Acklam L<pjacklam@online.no>.
+
+=back
 
 =cut

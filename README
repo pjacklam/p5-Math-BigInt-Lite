@@ -1,4 +1,4 @@
-Math-BigInt
+Math-BigInt-Lite
 
 Math::BigInt::Lite - what Math::BigInts are before they get big
 
@@ -35,7 +35,7 @@ You can also look for information at:
 
 COPYRIGHT AND LICENCE
 
-Copyright 2001-2007 Tels, L<http://bloodgate.com>.
+Copyright 2002-2007 Tels, L<http://bloodgate.com>.
 
 Copyright 2010 Florian Ragwitz L<flora@cpan.org>.
 
