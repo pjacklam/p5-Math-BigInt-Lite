@@ -1,7 +1,9 @@
+#!perl
 
 # We need at least Perl 5.6.2
 require 5.6.2;
 use strict;
+use warnings;
 
 # Load the Module::Install bundled in ./inc/
 use inc::Module::Install;
@@ -13,14 +15,13 @@ name		'Math-BigInt-Lite';
 all_from	'lib/Math/BigInt/Lite.pm';
 
 requires	'perl'		=> 5.006002;
-requires	'Math::BigInt'	=> 1.94;
-requires	'Math::BigRat'	=> 0.19;
+requires	'Math::BigInt'	=> 1.999801;
 
-build_requires	'Test::More'	=> 0.52;
+build_requires	'Test::More'	=> 0.47;
 
 license		'perl';
 
-author		'Tels <nospam-abuse@bloodgate.com>';
+author		'Peter John Acklam <pjacklam@online.no>';
 
 # Do not index these
 no_index	directory	=> 'examples';
@@ -29,4 +30,3 @@ sign;
 
 # Generate the Makefile
 WriteAll;
-

@@ -21,8 +21,8 @@ SKIP:
     $@ ? 0 : 1;
     };
 
-  my $trustme = { 
-    trustme => [ 'isa', 'objectify' ], 
+  my $trustme = {
+    trustme => [ 'isa', 'objectify' ],
     coverage_class => 'Pod::Coverage::CountParents',
     };
   pod_coverage_ok( 'Math::BigInt::Lite', $trustme, "All our Math::BigInt::Lites are covered" );

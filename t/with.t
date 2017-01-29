@@ -3,7 +3,7 @@
 use strict;
 use Test;
 
-BEGIN 
+BEGIN
   {
   $| = 1;
   chdir 't' if -d 't';
@@ -39,4 +39,3 @@ ok ($x->is_odd(),1);
 # done
 
 1;
-
