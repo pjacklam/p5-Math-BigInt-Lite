@@ -1,5 +1,9 @@
-Complete version history
-========================
+2017-03-01 v0.17 pjacklam
+
+ * Improve the logic in blog() to determine how to call objectify(). The old,
+   simpler logic didn't handle an undefined base correctly.
+
+ * Fix bexp() which was objectifying one argument too many.
 
 2015-11-30 v0.16 pjacklam
 

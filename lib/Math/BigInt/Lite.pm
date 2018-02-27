@@ -8,7 +8,7 @@ require 5.006002;
 use strict;
 
 require Exporter;
-use Math::BigInt '1.999801';
+use Math::BigInt 1.999801;
 
 our ($_trap_inf, $_trap_nan);
 
@@ -16,7 +16,7 @@ our @ISA = qw(Math::BigInt);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.16';
+our $VERSION = '0.17';
 
 ##############################################################################
 # global constants, flags and accessory
@@ -1113,7 +1113,20 @@ sub bpow {
 }
 
 sub blog {
-    my ($class, $x, $base, @r) = objectify(2, @_);
+    my ($class, $x, $base, @r);
+
+    # Don't objectify the base, since an undefined base, as in $x->blog() or
+    # $x->blog(undef) signals that the base is Euler's number.
+
+    if (!ref($_[0]) && $_[0] =~ /^[A-Za-z]|::/) {
+        # E.g., Math::BigInt::Lite->blog(256, 2)
+        ($class, $x, $base, @r) =
+          defined $_[2] ? objectify(2, @_) : objectify(1, @_);
+    } else {
+        # E.g., Math::BigInt::Lite::blog(256, 2) or $x->blog(2)
+        ($class, $x, $base, @r) =
+          defined $_[1] ? objectify(2, @_) : objectify(1, @_);
+    }
 
     $x = $upgrade->new($$x) if $x->isa($class);
     $base = $upgrade->new($$base) if defined $base && $base->isa($class);
@@ -1122,7 +1135,7 @@ sub blog {
 }
 
 sub bexp {
-    my ($class, $x, @r) = objectify(2, @_);
+    my ($class, $x, @r) = objectify(1, @_);
 
     $x = $upgrade->new($$x) if $x->isa($class);
 
