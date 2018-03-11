@@ -5,7 +5,9 @@
 package Math::BigInt::Lite;
 
 require 5.006002;
+
 use strict;
+use warnings;
 
 use Math::BigInt 1.999801;
 

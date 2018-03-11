@@ -1,7 +1,9 @@
 #!/usr/bin/perl -w
 
-use Test::More;
 use strict;
+use warnings;
+
+use Test::More;
 
 my $tests;
 
