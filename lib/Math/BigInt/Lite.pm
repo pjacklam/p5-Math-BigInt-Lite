@@ -7,7 +7,6 @@ package Math::BigInt::Lite;
 require 5.006002;
 use strict;
 
-require Exporter;
 use Math::BigInt 1.999801;
 
 our ($_trap_inf, $_trap_nan);
@@ -1244,7 +1243,7 @@ sub import {
             $j -= $s;
         }
     }
-    # any non :constant stuff is handled by our parent, Math::BigInt or Exporter
+    # any non :constant stuff is handled by our parent,
     # even if @_ is empty, to give it a chance
     $self->SUPER::import(@a);           # need it for subclasses
     $self->export_to_level(1, $self, @a); # need it for MBF
