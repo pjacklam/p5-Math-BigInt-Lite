@@ -1,3 +1,7 @@
+2018-03-30 v0.18 pjacklam
+
+ * Make sure tests pass for newer versions of Perl where '.' is not in @INC.
+
 2017-03-01 v0.17 pjacklam
 
  * Improve the logic in blog() to determine how to call objectify(). The old,

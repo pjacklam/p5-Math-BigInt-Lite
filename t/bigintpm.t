@@ -14,4 +14,4 @@ $CALC  = "Math::BigInt::Calc";
 #############################################################################
 # all the other tests
 
-require 't/bigintpm.inc';               # all tests here for sharing
+require './t/bigintpm.inc';             # all tests here for sharing
