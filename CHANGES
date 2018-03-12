@@ -1,5 +1,8 @@
 2018-03-30 v0.18 pjacklam
 
+ * Sync with recent versions of Math::BigInt. Also fix config() and tests of
+   config().
+
  * Use $LIB for the name of the backend math library.
 
  * Add "use warnings;".

@@ -3,13 +3,13 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3913;
+use Test::More tests => 4026;
 
 use Math::BigInt::Lite;
 
 our ($CLASS, $LIB);
 $CLASS = "Math::BigInt::Lite";
-$LIB   = "Math::BigInt::Calc";
+$LIB   = "Math::BigInt::Calc";  # for Math::BigInt, not Math::BigInt::Lite!
 
 #############################################################################
 # all the other tests

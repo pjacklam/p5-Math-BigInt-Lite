@@ -256,8 +256,33 @@ BEGIN {
 }
 
 sub config {
+    my $class = shift;
+
+    # config({a => b, ...}) -> config(a => b, ...)
+    @_ = %{ $_[0] } if @_ == 1 && ref($_[0]) eq 'HASH';
+
+    # Getter/accessor.
+
+    if (@_ == 1) {
+        my $param = shift;
+
+        # We don't use a math backend library.
+        return undef if ($param eq 'lib' ||
+                         $param eq 'lib_version');
+
+        return $class -> SUPER::config($param);
+    }
+
+    # Setter.
+
+    $class -> SUPER::config(@_) if @_;
+
+    # For backwards compatibility.
+
     my $cfg = Math::BigInt -> config();
-    $cfg->{version_lite} = $VERSION;
+    $cfg->{version}     = $VERSION;
+    $cfg->{lib}         = undef;
+    $cfg->{lib_version} = undef;
     $cfg;
 }
 
@@ -1213,6 +1238,24 @@ sub bsqrt {
     }
     $$x = $s;
     $x;
+}
+
+sub to_bin {
+    my $self  = shift;
+    my $class = ref $self;
+    $upgrade -> new($$self) -> to_bin();
+}
+
+sub to_oct {
+    my $self  = shift;
+    my $class = ref $self;
+    $upgrade -> new($$self) -> to_oct();
+}
+
+sub to_hex {
+    my $self  = shift;
+    my $class = ref $self;
+    $upgrade -> new($$self) -> to_hex();
 }
 
 ##############################################################################
