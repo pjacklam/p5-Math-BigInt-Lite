@@ -7,9 +7,9 @@ use Test::More tests => 3913;
 
 use Math::BigInt::Lite;
 
-our ($CLASS, $CALC);
+our ($CLASS, $LIB);
 $CLASS = "Math::BigInt::Lite";
-$CALC  = "Math::BigInt::Calc";
+$LIB   = "Math::BigInt::Calc";
 
 #############################################################################
 # all the other tests

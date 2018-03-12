@@ -1,5 +1,7 @@
 2018-03-30 v0.18 pjacklam
 
+ * Use $LIB for the name of the backend math library.
+
  * Add "use warnings;".
 
  * No need for "require Exporter" when our parent class loads it.
