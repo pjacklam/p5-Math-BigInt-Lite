@@ -1,5 +1,7 @@
 2018-03-30 v0.18 pjacklam
 
+ * Convert t/pod_cov.t -> t/release-pod-coverage.t.
+
  * Convert t/pod.t -> t/release-pod.t.
 
  * Sync with recent versions of Math::BigInt. Also fix config() and tests of
