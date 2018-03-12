@@ -483,14 +483,12 @@ sub round {
 
 sub bnan {
     # return a bnan or set object to NaN
-    my $x = shift;
-
     $upgrade->bnan();
 }
 
 sub binf {
     # return a binf
-    my $x = shift;
+    shift;
 
     #  return $upgrade->new($$x)->binf(@_) if ref $x;
     $upgrade->binf(@_);         # binf(1, '-') form
@@ -1242,19 +1240,16 @@ sub bsqrt {
 
 sub to_bin {
     my $self  = shift;
-    my $class = ref $self;
     $upgrade -> new($$self) -> to_bin();
 }
 
 sub to_oct {
     my $self  = shift;
-    my $class = ref $self;
     $upgrade -> new($$self) -> to_oct();
 }
 
 sub to_hex {
     my $self  = shift;
-    my $class = ref $self;
     $upgrade -> new($$self) -> to_hex();
 }
 
