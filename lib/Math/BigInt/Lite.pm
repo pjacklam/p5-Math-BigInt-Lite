@@ -1308,7 +1308,7 @@ Math::BigInt::Lite - What Math::BigInts are before they become big
 
     use Math::BigInt::Lite;
 
-    $x = Math::BigInt::Lite->new(1);
+    my $x = Math::BigInt::Lite->new(1);
 
     print $x->bstr(), "\n";                     # 1
     $x = Math::BigInt::Lite->new('1e1234');

@@ -1,5 +1,7 @@
 0.18 2018-03-30 pjacklam
 
+ * Add test file t/release-synopsis.t.
+
  * Reformat CHANGES to match the specification in CPAN::Changes::Spec and
    CPAN::Meta::Spec. Add test file t/release-cpan-changes.t.
 
