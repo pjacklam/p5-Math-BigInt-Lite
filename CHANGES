@@ -1,5 +1,7 @@
 0.18 2018-03-30 pjacklam
 
+ * Add test file t/release-test-version.t.
+
  * Add test file t/release-kwalitee.t.
 
  * Add test file t/release-unused-vars.t.
