@@ -1,28 +1,17 @@
-0.18 2018-03-30 pjacklam
-
- * Increment version number.
-
- * Add test file t/release-test-version.t.
-
- * Add test file t/release-kwalitee.t.
-
- * Add test file t/release-unused-vars.t.
-
- * Add test file t/release-portability.t.
-
- * Add test file t/release-synopsis.t.
-
- * Reformat CHANGES to match the specification in CPAN::Changes::Spec and
-   CPAN::Meta::Spec. Add test file t/release-cpan-changes.t.
-
- * Add t/release-whitespaces.t.
-
- * Convert t/pod_cov.t -> t/release-pod-coverage.t.
-
- * Convert t/pod.t -> t/release-pod.t.
+0.18 2018-04-17
 
  * Sync with recent versions of Math::BigInt. Also fix config() and tests of
    config().
+
+ * Add test files t/release-test-version.t, t/release-kwalitee.t,
+   t/release-unused-vars.t, t/release-portability.t, t/release-synopsis.t,
+   t/release-whitespaces.t, and t/release-cpan-changes.t.
+
+ * Reformat CHANGES to match the specification in CPAN::Changes::Spec and
+   CPAN::Meta::Spec.
+
+ * Convert test file t/02pod.t to t/release-pod.t and t/03podcov.t to
+   t/release-pod-coverage.t.
 
  * Use $LIB for the name of the backend math library.
 
