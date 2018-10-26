@@ -1167,11 +1167,11 @@ sub bexp {
 }
 
 sub batan2 {
-    my ($class, $x, @r) = objectify(2, @_);
+    my ($class, $x, $y, @r) = objectify(2, @_);
 
     $x = $upgrade->new($$x) if $x->isa($class);
 
-    $x->batan2(@r);
+    $x->batan2($y, @r);
 }
 
 sub bnok {
