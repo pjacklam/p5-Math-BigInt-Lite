@@ -1,5 +1,7 @@
 0.19
 
+ * Add test file for bnok().
+
  * Sync tests with Math-BigInt.
 
  * Better Makefile.PL
