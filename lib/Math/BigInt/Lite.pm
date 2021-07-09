@@ -9,7 +9,7 @@ require 5.006002;
 use strict;
 use warnings;
 
-use Math::BigInt 1.999801;
+use Math::BigInt 1.999821;
 
 our ($_trap_inf, $_trap_nan);
 
@@ -17,7 +17,7 @@ our @ISA = qw(Math::BigInt);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 ##############################################################################
 # global constants, flags and accessory
