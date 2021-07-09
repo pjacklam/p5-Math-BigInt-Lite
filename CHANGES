@@ -1,3 +1,11 @@
+0.21 2021-07-09
+
+ * Make the methods from_hex(), from_oct(), from_bin(), and new() accept
+   prefixes without a leading "0".
+
+ * Make from_hex(), from_oct(), and from_bin() accept leading and trailing
+   whitespace.
+
 0.20 2021-07-08
 
  * Sync with recent changes to the Math-BigInt distribution.
