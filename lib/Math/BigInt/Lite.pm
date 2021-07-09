@@ -1395,7 +1395,8 @@ All other methods from BigInt and BigFloat should work as expected.
 
 Please report any bugs or feature requests to
 C<bug-math-bigint at rt.cpan.org>, or through the web interface at
-L<https://rt.cpan.org/Ticket/Create.html?Queue=Math-BigInt-Lite> (requires login).
+L<https://rt.cpan.org/Ticket/Create.html?Queue=Math-BigInt-Lite>
+(requires login).
 We will be notified, and then you'll automatically be notified of
 progress on your bug as I make changes.
 
@@ -1409,25 +1410,25 @@ You can also look for information at:
 
 =over 4
 
+=item * GitHub
+
+L<https://github.com/pjacklam/p5-Math-BigInt>
+
 =item * RT: CPAN's request tracker
 
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=Math-BigInt-Lite>
+L<https://rt.cpan.org/Dist/Display.html?Name=Math-BigInt>
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * MetaCPAN
 
-L<http://annocpan.org/dist/Math-BigInt-Lite>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/dist/Math-BigInt-Lite>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Math-BigInt-Lite/>
+L<https://metacpan.org/release/Math-BigInt>
 
 =item * CPAN Testers Matrix
 
-L<http://matrix.cpantesters.org/?dist=Math-BigInt-Lite>
+L<http://matrix.cpantesters.org/?dist=Math-BigInt>
+
+=item * CPAN Ratings
+
+L<https://cpanratings.perl.org/dist/Math-BigInt>
 
 =back
 
@@ -1438,7 +1439,7 @@ the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-L<Math::BigFloat> and L<Math::Big> as well as
+L<Math::BigFloat> and L<Math::BigInt> as well as
 L<Math::BigInt::Pari> and L<Math::BigInt::GMP>.
 
 The L<bignum|bignum> module.
@@ -1457,7 +1458,7 @@ Copyright 2010 Florian Ragwitz L<flora@cpan.org>.
 
 =item *
 
-Copyright 2016- Peter John Acklam L<pjacklam@online.no>.
+Copyright 2016- Peter John Acklam L<pjacklam@gmail.com>.
 
 =back
 
