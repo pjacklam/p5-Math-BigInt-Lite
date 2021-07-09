@@ -610,12 +610,14 @@ sub from_hex {
 
     if ($str =~ s/
                      ^
+                     \s*
                      ( [+-]? )
-                     (0?x)?
+                     ( 0 [Xx] )?
                      (
                          [0-9a-fA-F]*
                          ( _ [0-9a-fA-F]+ )*
                      )
+                     \s*
                      $
                  //x)
     {
@@ -655,11 +657,14 @@ sub from_oct {
 
     if ($str =~ s/
                      ^
+                     \s*
                      ( [+-]? )
+                     ( 0 [Oo] )?
                      (
                          [0-7]*
                          ( _ [0-7]+ )*
                      )
+                     \s*
                      $
                  //x)
     {
@@ -667,7 +672,7 @@ sub from_oct {
         # underscores or invalid characters.
 
         my $sign = $1;
-        my $chrs = $2;
+        my $chrs = $3;
         $chrs =~ tr/_//d;
         $chrs = '0' unless CORE::length $chrs;
 
@@ -699,12 +704,14 @@ sub from_bin {
 
     if ($str =~ s/
                      ^
+                     \s*
                      ( [+-]? )
-                     (0?b)?
+                     ( 0 [Bb] )?
                      (
                          [01]*
                          ( _ [01]+ )*
                      )
+                     \s*
                      $
                  //x)
     {
