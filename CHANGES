@@ -1,3 +1,8 @@
+0.22 2021-07-10
+
+ * Add the bdfac() (double factorial) method to make Math::BigInt::Lite more
+   comparible with Math::BigInt.
+
 0.21 2021-07-09
 
  * Make the methods from_hex(), from_oct(), from_bin(), and new() accept

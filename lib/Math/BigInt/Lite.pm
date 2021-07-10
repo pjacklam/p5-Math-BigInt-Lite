@@ -17,7 +17,7 @@ our @ISA = qw(Math::BigInt);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 ##############################################################################
 # global constants, flags and accessory
@@ -1132,6 +1132,14 @@ sub bfac {
 
     $x = $upgrade->new($$x) if $x->isa($class);
     $upgrade->bfac($x, $a, $p, $r);
+}
+
+sub bdfac {
+    my ($self, $x, $a, $p, $r) = ref($_[0]) ? (ref($_[0]), @_) :
+      ($class, $class->new($_[0]), $_[1], $_[2], $_[3], $_[4]);
+
+    $x = $upgrade->new($$x) if $x->isa($class);
+    $upgrade->bdfac($x, $a, $p, $r);
 }
 
 sub bpow {
