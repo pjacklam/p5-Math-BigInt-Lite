@@ -9,7 +9,7 @@ require 5.006002;
 use strict;
 use warnings;
 
-use Math::BigInt 1.999821;
+use Math::BigInt;
 
 our ($_trap_inf, $_trap_nan);
 
@@ -17,7 +17,7 @@ our @ISA = qw(Math::BigInt);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 ##############################################################################
 # global constants, flags and accessory
@@ -1462,11 +1462,11 @@ Copyright 2002-2007 Tels, L<http://bloodgate.com>.
 
 =item *
 
-Copyright 2010 Florian Ragwitz L<flora@cpan.org>.
+Copyright 2010 Florian Ragwitz E<lt>flora@cpan.orgE<gt>.
 
 =item *
 
-Copyright 2016- Peter John Acklam L<pjacklam@gmail.com>.
+Copyright 2016- Peter John Acklam E<lt>pjacklam@gmail.comE<gt>.
 
 =back
 
