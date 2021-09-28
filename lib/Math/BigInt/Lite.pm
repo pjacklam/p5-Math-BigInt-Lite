@@ -267,8 +267,8 @@ sub config {
         my $param = shift;
 
         # We don't use a math backend library.
-        return undef if ($param eq 'lib' ||
-                         $param eq 'lib_version');
+        return if ($param eq 'lib' ||
+                   $param eq 'lib_version');
 
         return $class -> SUPER::config($param);
     }
