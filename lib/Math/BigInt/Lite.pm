@@ -1253,6 +1253,12 @@ sub bsqrt {
     $x;
 }
 
+sub bpi {
+    my $self = shift;
+    my $class = ref($self) || $self;
+    $class -> new("3");
+}
+
 sub to_bin {
     my $self  = shift;
     $upgrade -> new($$self) -> to_bin();
