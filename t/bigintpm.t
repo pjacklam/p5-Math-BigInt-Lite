@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4292;
+use Test::More tests => 4280;
 
 use Math::BigInt::Lite;
 
