@@ -4,7 +4,7 @@
 
 package Math::BigInt::Lite;
 
-require 5.006002;
+require 5.006001;
 
 use strict;
 use warnings;

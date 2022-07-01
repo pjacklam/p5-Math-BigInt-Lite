@@ -10,7 +10,7 @@ WriteMakefile
    'NAME'               => 'Math::BigInt::Lite',
    'VERSION_FROM'       => 'lib/Math/BigInt/Lite.pm',
    'AUTHOR'             => 'Peter John Acklam <pjacklam@gmail.com>',
-   'MIN_PERL_VERSION'   => 5.006002,
+   'MIN_PERL_VERSION'   => 5.006001,
 
    # A hash of modules that are required to run Makefile.PL itself, but not to
    # run the distribution.
