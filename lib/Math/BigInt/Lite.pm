@@ -9,13 +9,14 @@ require 5.006002;
 use strict;
 use warnings;
 
+require Exporter;
 use Scalar::Util qw< blessed >;
 
 use Math::BigInt;
 
 our ($_trap_inf, $_trap_nan);
 
-our @ISA = qw(Math::BigInt);
+our @ISA = qw(Math::BigInt Exporter);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
