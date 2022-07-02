@@ -28,7 +28,7 @@ WriteMakefile
 
    'PREREQ_PM'          => {
                             'Math::BigInt'        => 1.999819,
-                            'Carp'                => 0,
+                            'Carp'                => 1.22,
                             'Scalar::Util'        => 0,
                            },
 
