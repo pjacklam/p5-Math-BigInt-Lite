@@ -20,7 +20,7 @@ our @ISA = qw(Math::BigInt Exporter);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.26';
+our $VERSION = '0.27';
 
 ##############################################################################
 # global constants, flags and accessory
