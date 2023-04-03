@@ -20,7 +20,7 @@ our @ISA = qw(Math::BigInt Exporter);
 our @EXPORT_OK = qw/objectify/;
 my $class = 'Math::BigInt::Lite';
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 
 ##############################################################################
 # global constants, flags and accessory
@@ -1778,25 +1778,21 @@ You can also look for information at:
 
 =over 4
 
-=item * GitHub
+=item * GitHub Source Repository
 
-L<https://github.com/pjacklam/p5-Math-BigInt>
+L<https://github.com/pjacklam/p5-Math-BigInt-Lite>
 
 =item * RT: CPAN's request tracker
 
-L<https://rt.cpan.org/Dist/Display.html?Name=Math-BigInt>
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Math-BigInt-Lite>
 
 =item * MetaCPAN
 
-L<https://metacpan.org/release/Math-BigInt>
+L<https://metacpan.org/release/Math-BigInt-Lite>
 
 =item * CPAN Testers Matrix
 
-L<http://matrix.cpantesters.org/?dist=Math-BigInt>
-
-=item * CPAN Ratings
-
-L<https://cpanratings.perl.org/dist/Math-BigInt>
+L<http://matrix.cpantesters.org/?dist=Math-BigInt-Lite>
 
 =back
 
