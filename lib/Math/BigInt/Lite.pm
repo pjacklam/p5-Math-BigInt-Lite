@@ -1022,8 +1022,25 @@ sub blsft {
     $x;
 }
 
-##############################################################################
-# bitwise logical operators
+###############################################################################
+# Bitwise methods
+###############################################################################
+
+# Bitwise left shift.
+
+sub bblsft {
+    my ($class, $x, $y, @r) = ref($_[0]) ? (ref($_[0]), @_) : @_;
+    # For now, upgrade, but we should handle simple cases here. Fixme!
+    $upgrade -> bblsft($x, $y, @r);
+}
+
+# Bitwise right shift.
+
+sub bbrsft {
+    my ($class, $x, $y, @r) = ref($_[0]) ? (ref($_[0]), @_) : @_;
+    # For now, upgrade, but we should handle simple cases here. Fixme!
+    $upgrade -> bbrsft($x, $y, @r);
+}
 
 sub band {
     # AND two objects
